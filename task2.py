@@ -16,6 +16,10 @@ TOKEN = "token"
 router = Router()
 
 @router.message(F.text == "Tea")
+@router.message(F.text == "Coffee")
+@router.message(F.text == "Beer")
+@router.message(F.text == "Pepsi")
+@router.message(F.text == "Cola")
 async def handlefunc(message: types.Message):
     await message.answer(
         f"Nice to meet you,Did you like to write bots?",
