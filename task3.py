@@ -12,7 +12,7 @@ from aiogram.utils import executor
 
 
 logging.basicConfig(level=logging.INFO)
-bot = Bot(token='6231010696:AAHdx578ciB1_1OWILs2lFUhWP2hyQ4GQbs')
+bot = Bot(token='token')
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
