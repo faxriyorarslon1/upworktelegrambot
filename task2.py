@@ -1,32 +1,45 @@
 # 2. Write a aiogram bot that 
 #will create and send a custom keyboard to the user when the user sends a list of beverages (Tea, Coffee, Beer, Pepsi, Cola).
 
+import asyncio
 import logging
-import aiogram.utils.markdown as md
-from aiogram import Bot, Dispatcher, types
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from aiogram.types.message import ContentTypes
-from aiogram.dispatcher.filters import Text
-from aiogram.utils import executor
 
-# Set up logging
-logging.basicConfig(level=logging.INFO)
+from aiogram import Bot, Dispatcher, Router, types
+from aiogram.filters import Filter
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
+from aiogram import F
 
-# Initialize bot and dispatcher
-bot = Bot(token='token')
-dp = Dispatcher(bot)
+# Bot token can be obtained via https://t.me/BotFather
+TOKEN = "token"
+
+# All handlers should be attached to the Router (or Dispatcher)
+router = Router()
+
+@router.message(F.text == "Tea")
+async def handlefunc(message: types.Message):
+    await message.answer(
+        f"Nice to meet you,Did you like to write bots?",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[
+                [
+                    KeyboardButton(text="Yes"),
+                    KeyboardButton(text="No"),
+                ]
+            ],
+            resize_keyboard=True,
+        ),
+    )
 
 
-@dp.message_handler(Text(equals=["Tea", "Coffee", "Beer", "Pepsi", "Cola"]))
-async def handle_brands(message: types.Message):
-    keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb1 = KeyboardButton('Option 1')
-    kb2 = KeyboardButton('Option 2')
-    keyboard.add(kb1, kb2)
-    keyboard.add(KeyboardButton('Option 3'))
-    keyboard.add(KeyboardButton('Option 4'))
-    await bot.send_message(chat_id=message.chat.id, text="Choose an option:",
-                            reply_markup=keyboard)
+async def main() -> None:
+    dp = Dispatcher()
+    dp.include_router(router)
 
-if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    bot = Bot(TOKEN, parse_mode="HTML")
+    # And the run events dispatching
+    await dp.start_polling(bot)
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    asyncio.run(main())
