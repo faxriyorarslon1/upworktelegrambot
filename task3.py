@@ -1,7 +1,6 @@
 # 3. Write down a sample bot code for a registration form that will collect user's Name, Age, Phone and Email.
 # This should be using FSM feature in Aiogram. 
 # There should be proper validation and error messages to the user if any entered values are not proper.
-
 import logging
 import re
 from aiogram import Bot, Dispatcher, types

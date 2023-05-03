@@ -1,5 +1,4 @@
 # 1. Create a bot that will reply the user's first name for any messages sent to the bot.
-
 import logging
 import aiogram
 from aiogram import Bot, Dispatcher, types
